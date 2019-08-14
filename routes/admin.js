@@ -22,7 +22,6 @@ router.post(
       .isString()
       .isLength({ min: 3 })
       .trim(),
-    body("imageUrl").isURL(),
     body("price")
       .isFloat()
       .trim(),
@@ -43,7 +42,6 @@ router.post(
       .isString()
       .isLength({ min: 3 })
       .trim(),
-    body("imageUrl").isURL(),
     body("price")
       .isFloat()
       .trim(),
