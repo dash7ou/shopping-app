@@ -11,6 +11,8 @@ const multer = require("multer");
 
 const errorController = require("./controllers/error");
 const { User } = require("./models/user");
+const isAuth = require("./middleware/is-auth");
+const shopController = require("./controllers/shop");
 
 const MONGODB_URI = "mongodb://localhost:27018/Shop";
 
@@ -81,10 +83,16 @@ app.use((req, res, next) => {
     });
 });
 app.use(flash());
-app.use(csrfProtection);
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
+  next();
+});
+
+app.post("/create-order", isAuth, shopController.postOrder);
+
+app.use(csrfProtection);
+app.use((req, res, next) => {
   res.locals.csrfToken = req.csrfToken();
   next();
 });
